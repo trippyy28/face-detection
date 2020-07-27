@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import Navigation from './components/navigation/navigation';
+import SignIn from './components/signin/signin';
+import Register from './components/register/register';
 import Clarifai from 'clarifai';
 import Logo from './components/logo/logo';
 import ImageLinkForm from './components/imagelinkform/imagelinkform';
@@ -14,7 +16,7 @@ const app = new Clarifai.App({
 const particlesOptions ={
  "particles": {
     "number": {
-      "value": 150,
+      "value": 100,
       "density": {
         "enable": true,
         "value_area": 800
@@ -30,7 +32,8 @@ class App extends Component {
     this.state = {
       input :'',
       imageUrl :'',
-      box :{}
+      box :{},
+      route :'signin'
 
     }
   }
@@ -67,18 +70,33 @@ class App extends Component {
    .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
    .catch(err => console.log(err));
   }
+
+  onRouteChange = (route) =>{
+    this.setState({route:route})
+  }
   render(){
   return (
     <div className="App">
-       <Particles className ='particles' 
+      <Particles className ='particles' 
        params={particlesOptions} />
-    <Navigation/>
+    <Navigation onRouteChange ={this.onRouteChange}/>
+    {this.state.route === 'home'
+     ?<div>
     <Logo/>
     <Rank/>
     <ImageLinkForm 
     onInputChange={this.onInputChange} 
-    onButtonSubmit={this.onButtonSubmit}/>
+    onButtonSubmit={this.onButtonSubmit}
+    />
     <FaceRecognition box ={this.state.box} imageUrl={this.state.imageUrl}/>
+    </div>
+    :(
+      this.state.route === 'signin'
+      ? <SignIn onRouteChange={this.onRouteChange}/>
+      :<Register onRouteChange = {this.onRouteChange}/>
+
+      )
+    }
     </div>
   );
  }
