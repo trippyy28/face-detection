@@ -9,7 +9,6 @@ import Rank from "./components/rank/rank";
 import Particles from "react-particles-js";
 import { Route, Switch, Router } from "react-router-dom";
 import FaceRecognition from "./components/facerecognition/facerecognition";
-import Home from "./Home";
 import "./App.css";
 const app = new Clarifai.App({
   apiKey: "0f68e4b17c4a49ad9ce1a1873f2911cf",
@@ -120,31 +119,14 @@ class App extends Component {
     const { isSignedin, imageUrl, route, box } = this.state;
     return (
       <div className="App">
-        <Particles className="particles" params={particlesOptions} />
-        <Navigation
-          isSignedin={isSignedin}
-          onRouteChange={this.onRouteChange}
-        />
         <div>
-          <Logo />
+          <Rank name={this.state.user.name} entries={this.state.user.entries} />
+          <ImageLinkForm
+            onInputChange={this.onInputChange}
+            onButtonSubmit={this.onButtonSubmit}
+          />
+          <FaceRecognition box={box} imageUrl={imageUrl} />
         </div>
-        <Switch>
-          <Route path exact="/">
-            <Home />
-          </Route>
-          <Route path="/signin">
-            <Signin
-              loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange}
-            />
-          </Route>
-          <Route path="/reg">
-            <Register
-              loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange}
-            />
-          </Route>
-        </Switch>
       </div>
     );
   }

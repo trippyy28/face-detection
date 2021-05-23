@@ -82,7 +82,6 @@ class Signin extends React.Component {
               >
                 Register
               </p>
-              <h1>JUST CLICK ON SIGN IN</h1>
             </div>
           </form>
         </main>
