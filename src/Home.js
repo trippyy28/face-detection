@@ -1,13 +1,7 @@
 import React, { Component } from "react";
-import Navigation from "./components/navigation/navigation";
-import Signin from "./components/signin/signin";
-import Register from "./components/register/register";
 import Clarifai from "clarifai";
-import Logo from "./components/logo/logo";
 import ImageLinkForm from "./components/imagelinkform/imagelinkform";
-import Rank from "./components/rank/rank";
-import Particles from "react-particles-js";
-import { Route, Switch, Router } from "react-router-dom";
+
 import FaceRecognition from "./components/facerecognition/facerecognition";
 import "./App.css";
 const app = new Clarifai.App({
@@ -33,8 +27,6 @@ class App extends Component {
       input: "",
       imageUrl: "",
       box: {},
-      // route: "home",
-      // isSignedin: false,
       user: {
         id: "",
         name: "",
@@ -44,17 +36,7 @@ class App extends Component {
       },
     };
   }
-  loadUser = (data) => {
-    this.setState({
-      user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined,
-      },
-    });
-  };
+
   //face location calculation
   calculateFaceLocation = (data) => {
     const clarifaiFace =
@@ -107,20 +89,11 @@ class App extends Component {
       .catch((err) => console.log(err));
   };
 
-  // onRouteChange = (route) => {
-  //   if (route === "signout") {
-  //     this.setState({ isSignedin: false });
-  //   } else if (route === "home") {
-  //     this.setState({ isSignedin: true });
-  //   }
-  //   this.setState({ route: route });
-  // };
   render() {
     const { isSignedin, imageUrl, route, box } = this.state;
     return (
       <div className="App">
         <div>
-          <Rank name={this.state.user.name} entries={this.state.user.entries} />
           <ImageLinkForm
             onInputChange={this.onInputChange}
             onButtonSubmit={this.onButtonSubmit}
