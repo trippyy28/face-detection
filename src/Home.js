@@ -1,24 +1,12 @@
 import React, { Component } from "react";
 import Clarifai from "clarifai";
 import ImageLinkForm from "./components/imagelinkform/imagelinkform";
-
 import FaceRecognition from "./components/facerecognition/facerecognition";
-import "./App.css";
+
 const app = new Clarifai.App({
   apiKey: "0f68e4b17c4a49ad9ce1a1873f2911cf",
 });
 
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 100,
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-    },
-  },
-};
 
 class App extends Component {
   constructor() {
@@ -27,20 +15,13 @@ class App extends Component {
       input: "",
       imageUrl: "",
       box: {},
-      user: {
-        id: "",
-        name: "",
-        email: "",
-        entries: 0,
-        joined: "",
-      },
     };
   }
 
   //face location calculation
   calculateFaceLocation = (data) => {
     const clarifaiFace =
-      data.outputs[0].data.regions[0].region_info.bounding_box;
+    data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById("inputimage");
     const width = Number(image.width);
     const height = Number(image.height);
@@ -71,26 +52,13 @@ class App extends Component {
         this.state.input
       )
       .then((response) => {
-        if (response) {
-          fetch("http://localhost:3000/image", {
-            method: "put",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: this.state.user.id,
-            }),
-          })
-            .then((response) => response.json())
-            .then((count) => {
-              this.setState(Object.assign(this.state.user, { entries: count }));
-            });
-        }
         this.displayFaceBox(this.calculateFaceLocation(response));
       })
       .catch((err) => console.log(err));
   };
 
   render() {
-    const { isSignedin, imageUrl, route, box } = this.state;
+    const {imageUrl, box } = this.state;
     return (
       <div className="App">
         <div>

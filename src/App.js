@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Logo from "./components/logo/logo";
 import Particles from "react-particles-js";
 import { Route, Switch } from "react-router-dom";
@@ -21,13 +21,12 @@ const App = () => {
   return (
     <div className="App">
       <Particles className="particles" params={particlesOptions} />
-
       <div>
         <Logo />
       </div>
       <Switch>
         <Route path="/">
-          <Home />
+          <Home/>
         </Route>
       </Switch>
     </div>
